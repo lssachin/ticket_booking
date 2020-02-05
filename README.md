@@ -1,6 +1,6 @@
 # Ticket Booking
 
-A simple Event Management System
+A simple Ticket Booking System
 
 ## Installation and running application
 

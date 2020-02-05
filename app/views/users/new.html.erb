@@ -1,0 +1,46 @@
+<h1>Sign Up</h1>
+<div class="ui form">
+  <%= simple_form_for(@user) do |f| %>
+    <%= f.error_notification %>
+    <% if @user.errors.present? %>
+        <% f.object.errors.full_messages.each do |msg| %>
+          <li>* <%= msg %></li>
+        <% end %>
+    <% end %>
+    <div class="form-inputs">
+      <%= f.input :first_name, wrapper: "semantic" %>
+    </div>
+
+	   <div class="form-inputs">
+      <%= f.input :last_name, wrapper: "semantic" %>
+    </div>
+
+    <div class="form-inputs">
+      <%= f.input :gender, as: :select, collection: ["F", "M"], wrapper: "semantic" %>
+    </div>
+
+    <div class="form-inputs">
+      <%= f.input :email, wrapper: "semantic" %>
+    </div>
+
+    <div class="form-inputs">
+      <%= f.input :phone, wrapper: "semantic" %>
+    </div>
+
+    <div class="form-inputs">
+      <%= f.input :username, wrapper: "semantic" %>
+    </div>
+
+    <div class="form-inputs">
+      <%= f.input :password, wrapper: "semantic" %>
+    </div>
+    
+    <div class="form-inputs">
+      <%= f.input :confirm_password, wrapper: "semantic" %>
+    </div>
+    
+    <div class="form-actions">
+      <%= f.button :submit,'Sign Up', :class => "ui button basic" %>
+    </div>
+  <% end %>
+</div>

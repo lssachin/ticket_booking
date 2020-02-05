@@ -1,0 +1,48 @@
+<h1>My Bookings</h1>
+<script type="text/javascript">
+  function cancel(element){
+    var bookingId = element.getAttribute('booking-id');
+    fetch('/bookings/' + bookingId + '/cancel', {
+      method: 'PATCH',
+    }).then(response => {
+      window.location.href = window.location.href;
+    });
+  }
+</script>
+<table class="ui table striped">
+  <thead>
+    <tr>
+      <th>Booking Date</th>
+      <th>Movie</th>
+      <th>Theater</th>
+      <th>Show Date</th>
+      <th>Show Time</th>
+      <th>No: Tickets</th>
+      <th>Order Value</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bookings.each do |booking| %>
+      <tr>
+        <td><%= booking.created_at.to_date %></td>
+        <td><%= booking.movie.name %></td>
+        <td><%= booking.theater.name %></td>
+        <td><%= booking.show.show_date.to_date %></td>
+        <td><%= booking.show.show_time.hour %>:<%= booking.show.show_time.min %></td>
+        <td><%= booking.no_of_tickets %></td>
+        <td><%= booking.order_value %></td>
+        <%if session[:user_id] && !booking.is_cancelled && booking.show.valid? %>
+          <td>
+            <div class="ui buttons">
+              <button class="ui red button" onclick="cancel(this)" booking-id="<%=booking.id%>">Cancel Now</button>
+            </div>
+          </td>
+        <%else%>
+          <td></td>
+        <%end%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

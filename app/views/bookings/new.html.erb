@@ -1,0 +1,68 @@
+<h1>New Booking</h1>
+<script type="text/javascript">
+  function book(element){
+    var showId = element.getAttribute('show-id');
+    var noOfTickets = document.getElementById("no_of_tickets").value;
+    var coupon = document.getElementById("coupon").value
+    var body = {
+     'booking': {
+        'show_id': showId,
+        'no_of_tickets': noOfTickets,
+        'coupon_code': coupon
+      }
+    }
+    fetch(window.location.href, {
+      method: 'POST',
+      body: JSON.stringify(body)
+    }).then(response => {
+      window.location.href = "/mybookings";
+    });
+  }
+</script>
+<div class="ui cards">
+  <div class="card">
+    <div class="content">
+      <div class="header">
+        <%= @booking.show.movie.name %>
+      </div><br>
+      <div class="header">
+        <%= @booking.show.theater.name %>
+      </div><br>
+      <div class="meta">
+        Tickets Remaining <%= @booking.show.available_tickets %>
+      </div><br>
+      <div class="meta">
+        <%= @booking.show.show_date.to_date%> <%= @booking.show.time %>
+      </div><br>
+      <%if @user.gender == "F"%>
+        <div class="meta" style="text-decoration: line-through">
+          ₹ <%= @booking.show.price %> / Ticket
+        </div><br>
+        <div class="meta">
+          ₹ <%= @booking.show.price*0.95 %> / Ticket
+        </div><br>
+      <%else%>
+        <div class="meta">
+          ₹ <%= @booking.show.price %> / Ticket
+        </div><br>
+      <%end%>
+
+      <div class="form-inputs">
+        <div class="ui input">
+          <input id="no_of_tickets" type="text" placeholder="No: Tickets">
+        </div>
+      </div>
+      <div class="form-inputs">
+        <div class="ui input">
+          <input id="coupon" type="text" placeholder="Enter Coupon Code">
+        </div>
+      </div>
+    </div>
+    <div class="extra content">
+      <div class="ui two buttons">
+        <button class="ui green button" show-id="<%=@booking.show.id%>" style="margin-right: 5px" onclick="book(this)">Confirm</button>
+        <div class="ui red button" style="margin-left: 5px"><%= link_to 'Cancel', "/movies/#{@booking.show.movie.id}/theaters" %></div>
+      </div>
+    </div>
+  </div>
+</div>

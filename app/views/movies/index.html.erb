@@ -1,0 +1,25 @@
+<h1>Movies</h1>
+
+<table class="ui table striped">
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th>Release Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @movies.each do |movie| %>
+      <tr>
+        <td><%= movie.name %></td>
+        <td><%= movie.screen_date.to_date %></td>
+        <td>
+          <div class="ui buttons">
+            <div class="ui primary button"><%= link_to 'Show Theaters', "/movies/#{movie.id}/theaters" %></div>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
